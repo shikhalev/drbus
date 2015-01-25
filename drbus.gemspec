@@ -14,6 +14,7 @@ Gem::Specification.new do |g|
   g.license = 'GNU LGPLv3'
   g.files = [ 'README.md', 'LICENSE' ] +
       Dir['bin/*'] + Dir['lib/**/*']
+  g.executables = [ 'drbus' ]
 
   g.set_version(*DRBus::VERSION, git: true)
 
