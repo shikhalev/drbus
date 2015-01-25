@@ -16,7 +16,7 @@ Gem::Specification.new do |g|
       Dir['bin/*'] + Dir['lib/**/*']
   g.executables = [ 'drbus' ]
 
-  g.set_version(*DRBus::VERSION, git: true)
+  g.set_version *DRBus::VERSION, git: true
 
   g.require_path = 'lib'
   g.required_ruby_version = '~> 2.0'
