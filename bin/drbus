@@ -1,8 +1,69 @@
 #!/usr/bin/ruby
 # encoding: utf-8
 
+require 'optparse'
+require 'uri'
+
+$: << './lib'
+
 require 'drbus'
-require 'drbus/common'
 require 'drbus/bus'
 
+options = {
+  uri: URI('druby://localhost:9090/'),
+  verbose: false
+}
 
+opts = OptionParser.new do |o|
+
+  # o.banner = ''
+
+  o.on '-h', '--help', 'Show short help and exit.' do
+    puts opts.help
+    exit
+  end
+
+  o.on '-V', '--version', 'Show version info and exit.' do
+    puts DRBus::VERSION.join('.')
+    exit
+  end
+
+  o.on '-v', '--[no-]verbose', 'Verbose run.' do |value|
+    options[:verbose] = value
+  end
+
+  o.separator ''
+
+  o.on '-U', '--uri', '=URI', String, 'Server URI:',
+      '  druby://host:port', '  drbssl://host:port',
+      '  drbunix:/path/to/sock' do |value|
+    options[:uri] = URI(value)
+  end
+
+  o.on '-S', '--scheme', '--protocol', '=SCHEME',
+      [ 'druby', 'drbssl', 'drbunix' ], 'URI Scheme.' do |value|
+    options[:uri].scheme = value
+  end
+
+  o.on '-H', '--host', '=HOST', String, 'URI host.' do |value|
+    options[:uri].host = value
+  end
+
+  o.on '-P', '--port', '=PORT', Integer, 'URI port.' do |value|
+    options[:uri].port = value
+  end
+
+  o.on '-T', '--path', '=PATH', String,
+      'URI path (for drbunix: proto).' do |value|
+    options[:uri].path = value
+  end
+
+end
+
+begin
+  opts.parse ARGV
+rescue OptionParser::InvalidArgument => e
+  puts e.message
+end
+
+puts options
