@@ -20,12 +20,14 @@ module DRBus
 
     def initialize name: default_name, &block
       @name = name.intern
-      if block_given?
-        instance_eval(&block)
-      end
+      @block = block
     end
 
-    def start_service
+    def start_service url: nil
+      # TODO: start
+      if @block
+        instance_eval(&@block)
+      end
     end
 
   end
