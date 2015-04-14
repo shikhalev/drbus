@@ -2,13 +2,8 @@
 
 require 'pp'
 
-require 'socket'
+require_relative 'lib/drbus'
 
-hostname = Socket.gethostbyname('shikhalev-drbus-1322678')
+s = DRBus::Server.new
 
-p hostname
-
-hostname = %x{hostname}
-domainname = %x{hostname -f}
-
-pp [hostname, domainname]
+pp s
