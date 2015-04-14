@@ -1,7 +1,9 @@
 # encoding: utf-8
 
+require_relative 'drbus/version'
+
 module DRBus
 
-  VERSION = [0, 1, :pre]
+
 
 end

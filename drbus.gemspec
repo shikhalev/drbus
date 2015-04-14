@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 require 'set_version'
-require_relative 'lib/drbus'
+require_relative 'lib/drbus/version'
 
 Gem::Specification.new do |g|
 
