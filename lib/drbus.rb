@@ -1,11 +1,14 @@
 # encoding: utf-8
 
 require 'socket'
+require 'drb'
 require_relative 'drbus/version'
 
 module DRBus
 
   class Server
+
+    include DRbUndumped
 
     attr_reader :name
 
