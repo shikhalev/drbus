@@ -2,13 +2,13 @@
 
 require 'pp'
 
-require 'drb'
+require 'socket'
 
-DRb.start_service
+hostname = Socket.gethostbyname('shikhalev-drbus-1322678')
 
-obj = DRbObject.new nil, 'drbunix:/tmp/drbsock'
-p obj.myid
+p hostname
 
-obj.close
+hostname = %x{hostname}
+domainname = %x{hostname -f}
 
-p 0660
+pp [hostname, domainname]
