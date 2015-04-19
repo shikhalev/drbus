@@ -8,6 +8,8 @@ module DRBus
 
   class Server
 
+    DEFAULT_PRIORITY = 10
+
     include DRbUndumped
 
     attr_reader :name
@@ -28,6 +30,35 @@ module DRBus
       if @block
         instance_eval(&@block)
       end
+    end
+
+    def register_service service, channels, obj,
+        allow_direct: true, allow_proxy: true
+      srv = service.intern
+      chs = {}
+      case channels
+      when Array
+        channels.each { |i| chs[i.intern] = DEFAULT_PRIORITY }
+      when Hash
+        channels.each do |k, v|
+          if v == nil
+            chs[k.intern] = DEFAULT_PRIORITY
+          else
+            chs[k.intern] = v.to_i
+          end
+        end
+      else
+        chs[channels.intern] = DEFAULT_PRIORITY
+      end
+      data = {
+        object: obj,
+        channels: chs,
+        allow_direct: allow_direct,
+        allow_proxy: allow_proxy
+      }
+      @services ||= {}
+      @services[srv] ||= []
+      @services[srv] << data
     end
 
   end

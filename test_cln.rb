@@ -2,8 +2,6 @@
 
 require 'pp'
 
-require_relative 'lib/drbus'
+p :*
 
-s = DRBus::Server.new
-
-pp s
+    
